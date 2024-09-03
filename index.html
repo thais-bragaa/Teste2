@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolução dos Problemas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Resolução dos Problemas</h1>
+
+    <div class="section">
+        <h2>1. Cálculo da Variável SOMA</h2>
+        <button onclick="calcularSoma()">Calcular SOMA</button>
+        <div class="result" id="resultadoSoma"></div>
+    </div>
+
+    <div class="section">
+        <h2>2. Verificação na Sequência de Fibonacci</h2>
+        <input type="number" id="inputFibonacci" placeholder="Informe um número">
+        <button onclick="verificarFibonacci()">Verificar Fibonacci</button>
+        <div class="result" id="resultadoFibonacci"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. Análise de Faturamento Diário</h2>
+        <button onclick="analisarFaturamento()">Analisar Faturamento</button>
+        <div class="result" id="resultadoFaturamento"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Cálculo do Percentual de Representação</h2>
+        <button onclick="calcularPercentuais()">Calcular Percentuais</button>
+        <div class="result" id="resultadoPercentuais"></div>
+    </div>
+
+    <div class="section">
+        <h2>5. Inversão de String</h2>
+        <input type="text" id="inputString" placeholder="Informe uma string">
+        <button onclick="inverterString()">Invertir String</button>
+        <div class="result" id="resultadoString"></div>
+    </div>
+
+    <script>
+        // Função para o problema 1: Cálculo da variável SOMA
+        function calcularSoma() {
+            const indice = 13; // Definido conforme o exemplo
+            let soma = 0;
+            for (let k = 0; k < indice; k++) {
+                soma += (k + 1);
+            }
+            document.getElementById('resultadoSoma').innerText = `Valor da variável SOMA: ${soma}`;
+        }
+
+        // Função para o problema 2: Verificação de número na sequência de Fibonacci
+        function verificarFibonacci() {
+            const num = parseInt(document.getElementById('inputFibonacci').value, 10);
+            let a = 0, b = 1, c = 0;
+            while (c < num) {
+                c = a + b;
+                a = b;
+                b = c;
+            }
+            const pertence = c === num ? "pertence" : "não pertence";
+            document.getElementById('resultadoFibonacci').innerText = `O número ${num} ${pertence} à sequência de Fibonacci.`;
+        }
+
+        // Função para o problema 3: Análise de faturamento diário
+        function analisarFaturamento() {
+            const faturamento = {
+                "01": 20000.00,
+                "02": 22000.00,
+                "03": 25000.00,
+                "04": 27000.00,
+                "05": 30000.00,
+                "06": 32000.00,
+                "07": 31000.00,
+                "08": 33000.00,
+                "09": 35000.00,
+                "10": 36000.00,
+                "11": 37000.00,
+                "12": 39000.00,
+                "13": 0.00,
+                "14": 0.00
+            };
+            const valores = Object.values(faturamento);
+            const diasComFaturamento = valores.filter(valor => valor > 0);
+            const menorValor = Math.min(...valores);
+            const maiorValor = Math.max(...valores);
+            const mediaMensal = diasComFaturamento.reduce((acc, valor) => acc + valor, 0) / diasComFaturamento.length;
+            const diasAcimaMedia = diasComFaturamento.filter(valor => valor > mediaMensal).length;
+            document.getElementById('resultadoFaturamento').innerHTML = `
+                Menor valor de faturamento: R$${menorValor.toFixed(2)}<br>
+                Maior valor de faturamento: R$${maiorValor.toFixed(2)}<br>
+                Número de dias com faturamento acima da média: ${diasAcimaMedia}
+            `;
+        }
+
+        // Função para o problema 4: Cálculo do percentual de representação por estado
+        function calcularPercentuais() {
+            const faturamento = {
+                "SP": 67836.43,
+                "RJ": 36678.66,
+                "MG": 29229.88,
+                "ES": 27165.48,
+                "Outros": 19849.53
+            };
+            const totalFaturamento = Object.values(faturamento).reduce((acc, valor) => acc + valor, 0);
+            const percentuais = {};
+            for (const [estado, valor] of Object.entries(faturamento)) {
+                percentuais[estado] = (valor / totalFaturamento) * 100;
+            }
+            let resultado = '';
+            for (const [estado, percentual] of Object.entries(percentuais)) {
+                resultado += `Percentual de representação de ${estado}: ${percentual.toFixed(2)}%<br>`;
+            }
+            document.getElementById('resultadoPercentuais').innerHTML = resultado;
+        }
+
+        // Função para o problema 5: Inversão de caracteres de uma string
+        function inverterString() {
+            const str = document.getElementById('inputString').value;
+            let resultado = '';
+            for (let i = str.length - 1; i >= 0; i--) {
+                resultado += str[i];
+            }
+            document.getElementById('resultadoString').innerText = `String invertida: ${resultado}`;
+        }
+    </script>
+
+</body>
+</html>
